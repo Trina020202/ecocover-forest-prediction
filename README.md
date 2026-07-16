@@ -4,9 +4,7 @@ EcoCover is a portfolio-ready Streamlit application for a COMP5310 forest cover 
 
 ## Live Demo
 
-Target deployment URL:
-
-`https://ecocover-forest-prediction.streamlit.app`
+https://ecocover-forest-prediction.streamlit.app
 
 ## Tech Stack
 
