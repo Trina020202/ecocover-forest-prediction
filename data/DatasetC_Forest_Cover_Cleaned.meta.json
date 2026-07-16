@@ -1,0 +1,13 @@
+{
+  "source": "course_cleaned",
+  "original_filename": "forest_cover_cleaned_final.csv",
+  "rows": 14500,
+  "columns": [
+    "Elevation",
+    "avg_hillshade",
+    "Soil_Type",
+    "Area",
+    "Forest_Cover"
+  ],
+  "provenance": "Cleaned forest cover dataset from the COMP5310 project files. Copied into the Streamlit app as DatasetC_Forest_Cover_Cleaned.csv for deployment."
+}

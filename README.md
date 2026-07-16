@@ -35,25 +35,19 @@ Best estimator:
 
 ## Data and Model Provenance
 
-The app can run in two modes:
+This repository bundles the cleaned forest cover dataset used by the COMP5310 project:
 
-1. **Demo mode**  
-   If no cleaned CSV is bundled, the app creates a deterministic demo dataset calibrated from the submitted notebook's class counts and feature profiles. This keeps the public portfolio app interactive.
+`data/DatasetC_Forest_Cover_Cleaned.csv`
 
-2. **Real-data mode**  
-   Add the cleaned dataset at:
+Required columns:
 
-   `data/DatasetC_Forest_Cover_Cleaned.csv`
+- `Elevation`
+- `avg_hillshade`
+- `Soil_Type`
+- `Area`
+- `Forest_Cover`
 
-   Required columns:
-
-   - `Elevation`
-   - `avg_hillshade`
-   - `Soil_Type`
-   - `Area`
-   - `Forest_Cover`
-
-   When the CSV is present, the app trains a scikit-learn pipeline from the real cleaned data.
+On startup, the app trains a scikit-learn preprocessing and Random Forest pipeline from the bundled cleaned CSV. The model comparison table reports the submitted notebook experiment results.
 
 ## Run Locally
 

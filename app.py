@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import numpy as np
@@ -17,6 +18,7 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 APP_DIR = Path(__file__).parent
 DATA_PATH = APP_DIR / "data" / "DatasetC_Forest_Cover_Cleaned.csv"
+DATA_META_PATH = APP_DIR / "data" / "DatasetC_Forest_Cover_Cleaned.meta.json"
 
 NUMERIC_FEATURES = ["Elevation", "avg_hillshade"]
 CATEGORICAL_FEATURES = ["Soil_Type", "Area"]
@@ -248,8 +250,7 @@ def make_demo_dataset(seed: int = 42, target_rows: int = 14500) -> pd.DataFrame:
     rows: list[dict[str, object]] = []
 
     for profile in CLASS_PROFILES:
-        n_rows = int(round(profile["share"] * target_rows))
-        n_rows = max(n_rows, 90)
+        n_rows = int(profile["count"])
         area_names = list(profile["areas"].keys())
         area_probs = np.array(list(profile["areas"].values()), dtype=float)
         area_probs = area_probs / area_probs.sum()
@@ -297,7 +298,11 @@ def load_default_data() -> tuple[pd.DataFrame, str]:
     if DATA_PATH.exists():
         data = pd.read_csv(DATA_PATH)
         data = data[REQUIRED_COLUMNS].dropna().copy()
-        return data, "real"
+        source = "real"
+        if DATA_META_PATH.exists():
+            metadata = json.loads(DATA_META_PATH.read_text(encoding="utf-8"))
+            source = metadata.get("source", source)
+        return data, source
     return make_demo_dataset(), "demo"
 
 
@@ -399,7 +404,17 @@ def metric_cards(data: pd.DataFrame, source: str) -> None:
                 unsafe_allow_html=True,
             )
 
-    if source == "demo":
+    if source == "course_cleaned":
+        st.markdown(
+            """
+            <div class="status-note">
+                Live predictor is trained from the bundled cleaned forest cover CSV used in the COMP5310 project.
+                The reported comparison metrics come from the submitted notebook experiments.
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    elif source == "demo":
         st.markdown(
             """
             <div class="status-note">
